@@ -1,5 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap");
 
+/* Targeting the entire scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #b4b2b2;
+  border-radius: 10px;
+}
+
+/* Scrollbar thumb (the moving part) */
+::-webkit-scrollbar-thumb {
+  background: #2c2d2b;
+  border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+#terminal {
+  border: 1px solid rgba(16, 176, 16, 0.427);
+}
+
 .terminal-font {
   font-family: "JetBrains Mono", monospace;
 }
@@ -7,11 +31,6 @@
 .glow {
   text-shadow: 0 0 10px currentColor;
 }
-
-/* #terminal {
-    transform: perspective(1000px) rotateX(3deg);
-    box-shadow: 0 25px 50px rgba(0, 255, 0, 0.2);
-} */
 
 .binary-bg {
   opacity: 0.55;
@@ -42,7 +61,9 @@
 .light-placeholder::placeholder {
   color: #2c2d2b;
 }
-
+.night-placeholder::placeholder {
+  color: #f8f8f2;
+}
 ::selection {
   background-color: #1c961c;
   color: #e5e5e5;
@@ -66,4 +87,36 @@
 
 .key.light {
   color: #3594e2;
+}
+
+.key.night {
+  color: #f8f8f2;
+}
+
+.loader {
+  color: #00ff00;
+  font-family: "JetBrains Mono", monospace;
+  margin: 5px 0;
+}
+
+
+.typing-effect {
+  font-family: "JetBrains Mono", monospace;
+  color: inherit;
+  overflow: hidden;
+  margin: 4px 0;
+}
+
+.final-message {
+  border-right: none;
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #00ff00;
+  }
 }
