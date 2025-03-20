@@ -842,11 +842,11 @@ async function displayGuestIP() {
         
         `
         } else {
-            return "location not found";
+            return "ip not found";
         }
     } catch (error) {
         console.log(error);
-        return "location service unavailable";
+        return "ip service unavailable";
     }
 }
 
