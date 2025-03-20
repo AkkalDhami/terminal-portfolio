@@ -876,7 +876,7 @@ function openCV() {
     }
     return `
     <div class="my-3">
-        <p class="mb-2 text-[14px] sm:text-[16px]">opening cv in new tab...</p>
+        <p class="mb-2 text-[14px] sm:text-[16px]">opening raw cv in new tab...</p>
     </div>
     `;
 }
