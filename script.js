@@ -610,8 +610,14 @@ function displayThemes() {
         </div>
         <div class="my-2">
             <p>
-                <span class="key">usage:</span>
-                theme set theme-name
+                <div class="my-2">
+                    <span class="key">your current theme:</span>
+                    <span class="string">${currentTheme}</span>
+                </div>
+                <div class="my-2">
+                    <span class="key">usage:</span>
+                   <span> theme <span class="string">set</span> theme-name</span>
+                </div>
             </p>
             <p>
                 <span class="key">eg:</span>
@@ -968,77 +974,6 @@ const commands = {
     github: () => openGithub(),
 };
 
-// Array of sentences to display with typing effect
-const hackingTexts = [
-    "initializing system...",
-    "loading portfolio...",
-    "connecting to server...",
-    "authenticating user...",
-    "fetching data...",
-    "loading commands...",
-    "ready to use...",
-];
-
-//  typing effect
-async function typeText(element, text, speed = 50) {
-    return new Promise((resolve) => {
-        let i = 0;
-        const typingInterval = setInterval(() => {
-            if (i < text.length) {
-                element.textContent += text.charAt(i);
-                i++;
-            } else {
-                clearInterval(typingInterval);
-                resolve();
-            }
-        }, speed);
-    });
-}
-
-typeText(document.getElementById("portfolio-title"), "hello, i am akkal dhami", 50);
-// Function to simulate deleting text
-async function deleteText(element, speed = 10) {
-    return new Promise((resolve) => {
-        const deletingInterval = setInterval(() => {
-            if (element.textContent.length > 0) {
-                element.textContent = element.textContent.slice(0, -1);
-            } else {
-                clearInterval(deletingInterval);
-                resolve();
-            }
-        }, speed);
-    });
-}
-
-// Main function to display hacking effect
-async function hackingEffect() {
-    changeTheme(currentTheme);
-    const terminal = document.getElementById("history");
-    const typingElement = document.createElement("div");
-    typingElement.className = "typing-effect sm:text-[20px] text-[16px]";
-    terminal.appendChild(typingElement);
-
-    for (const text of hackingTexts) {
-        await typeText(typingElement, text); // Type the text
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        await deleteText(typingElement);
-        await new Promise((resolve) => setTimeout(resolve, 500));
-    }
-
-    await typeText(
-        typingElement,
-        "type 'help' or 'ls' to see available commands"
-    );
-    typingElement.classList.add("string");
-    document.querySelector("#portfolio-title").classList.add("flex");
-    document.querySelector("#portfolio-title").classList.remove("hidden");
-    document.querySelector("#portfolio-title").classList.add("lg:hidden");
-
-}
-
-// Start the effect when the page loads
-
-// window.onload = hackingEffect;
 
 // Clear Terminal
 function clearTerminal() {
@@ -1232,7 +1167,7 @@ input.addEventListener("keypress", async (e) => {
         return;
     }
     if (e.key === "Enter") {
-        const cmd = input.value.trim().toLowerCase();
+        const cmd = input.value.trim();
         addCommandToHistory(cmd);
 
         const stopLoader = showLoader();
@@ -1262,26 +1197,68 @@ changeTheme("default");
 window.addEventListener("resize", resizeCanvas);
 document.addEventListener("click", () => input.focus());
 
-// function typeWriter(text, element, speed = 80) {
-//     let i = 0;
-//     const typing = setInterval(() => {
-//         const currentChar = text.charAt(i);
-//         if (currentChar === '<') {
-//             const endTagIndex = text.indexOf('>', i);
-//             if (endTagIndex !== -1) {
-//                 element.innerHTML += text.substring(i, endTagIndex + 1);
-//                 i = endTagIndex + 1;
-//             }
-//         } else {
-//             element.innerHTML += currentChar;
-//             i++;
-//         }
-//         if (i >= text.length) clearInterval(typing);
-//     }, speed);
-// }
 
-// document.getElementById('terminal-title').innerHTML = '';
-// document.getElementById('portfolio-title').innerHTML = '';
+const typingEffect = (() => {
+    const texts = [
+        {
+            text: "web developer",
+            pause: 1500
+        },
+        {
+            text: "front-end developer",
+            pause: 1200
+        },
+        {
+            text: "back-end developer",
+            pause: 1300
+        }
+    ];
 
-// typeWriter('<span class="key">welcome</span> to my terminal portfolio!', document.getElementById('terminal-title'));
-// typeWriter('Hello, I am <span class="string">Akkal Dhami</span>', document.getElementById('portfolio-title'));
+    const element = document.getElementById('effect');
+    let index = 0;
+    let textIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 150;
+    let deleteSpeed = 75;
+
+    function getCurrentText() {
+        return typeof texts[textIndex] === 'object'
+            ? texts[textIndex].text
+            : texts[textIndex];
+    }
+
+    function getCurrentPause() {
+        return typeof texts[textIndex] === 'object'
+            ? texts[textIndex].pause
+            : 1000;
+    }
+
+    function type() {
+        const currentText = getCurrentText();
+        const displayedText = currentText.substring(0, index);
+
+        element.innerHTML = `${displayedText}<span class="cursor"></span>`;
+
+        if (!isDeleting) {
+            index++;
+            if (index > currentText.length) {
+                isDeleting = true;
+                setTimeout(() => type(), getCurrentPause());
+                return;
+            }
+        } else {
+            index--;
+            if (index === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+            }
+        }
+
+        const speed = isDeleting ? deleteSpeed : typingSpeed;
+        setTimeout(() => type(), speed);
+    }
+
+    return { start: () => setTimeout(type, 500) };
+})();
+
+typingEffect.start();
