@@ -995,6 +995,7 @@ async function typeText(element, text, speed = 50) {
     });
 }
 
+typeText(document.getElementById("portfolio-title"), "hello, i am akkal dhami", 50);
 // Function to simulate deleting text
 async function deleteText(element, speed = 10) {
     return new Promise((resolve) => {
@@ -1037,7 +1038,7 @@ async function hackingEffect() {
 
 // Start the effect when the page loads
 
-window.onload = hackingEffect;
+// window.onload = hackingEffect;
 
 // Clear Terminal
 function clearTerminal() {
