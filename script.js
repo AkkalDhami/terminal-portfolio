@@ -604,9 +604,13 @@ function displayThemes() {
     <div class="mb-4">
         <div class="my-2 text-[14px] sm:text-[16px]">
             <span class="text-[16.5px] sm:text-[18px] font-bold">available themes:</span>
+            <ul class="my-2 ">
             ${Object.keys(themes)
-            .map((theme) => `<span class="key">${theme}</span>`)
-            .join(", ")}
+            .map((theme) => `<li class="string">~ ${theme}</li>`)
+            .join(" ") || "no themes found"
+        }
+
+            </ul>
         </div>
         <div class="my-2">
             <p>
