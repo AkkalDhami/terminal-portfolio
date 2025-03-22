@@ -100,11 +100,22 @@
 }
 
 
+
 .typing-effect {
   font-family: "JetBrains Mono", monospace;
-  color: inherit;
-  overflow: hidden;
-  margin: 4px 0;
+  font-size: 2em;
+  min-height: 1.2em;
+}
+
+.cursor {
+  border-right: 3px solid #4CAF50;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .final-message {
